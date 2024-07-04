@@ -1,0 +1,4 @@
+ultralytics
+pyqt5
+labelme
+opencv-python-headless
