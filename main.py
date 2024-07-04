@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QVBoxLayout, QWidget, QFileDialog
 from PyQt5.QtCore import QProcess
 import subprocess
  
@@ -81,7 +81,13 @@ class CommandExecuter(QMainWindow):
 
         # 将输出显示在文本框中
         self.textbox2.setText(out.decode('utf-8') + '\n' + err.decode('utf-8'))
- 
+    def open_folder(self):
+        folder_path = QFileDialog.getExistingDirectory(self,
+                  "Open folder",
+                  "./")                 # start path
+        print(folder_path)
+        self.ui.show_folder_path.setText(folder_path)
+
 def main():
     app = QApplication(sys.argv)
     ex = CommandExecuter()
