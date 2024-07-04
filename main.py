@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QVBoxLayout, QWidget, QFileDialog
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QVBoxLayout, QWidget, QFileDialog, QLineEdit
 from PyQt5.QtCore import QProcess
 import subprocess
  
@@ -22,6 +22,8 @@ class CommandExecuter(QMainWindow):
         # 创建一个按钮和文本框 2
         self.button2 = QPushButton('YOLO', self)
         self.textbox2 = QTextEdit(self) 
+
+        self.le = QLineEdit(self)
         
         # 布局设置
         layout = QVBoxLayout()
@@ -33,7 +35,6 @@ class CommandExecuter(QMainWindow):
          
         layout.addWidget(self.buttonlabelme)
 
-        
         # 中央小部件
         centralWidget = QWidget()
         centralWidget.setLayout(layout)
