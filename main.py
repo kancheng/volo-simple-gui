@@ -2,13 +2,24 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QTextEdit, QVBoxLayout, QWidget, QFileDialog, QLineEdit
 from PyQt5.QtCore import QProcess
 import subprocess
- 
+
+import time
+import datetime
+
+# dt = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+# t = time.strftime("%Y%m%d%H%M%S", time.localtime())
+
+# print(dt)
+# print(t)
+
+
 class CommandExecuter(QMainWindow):
     def __init__(self):
         super().__init__()
         self.initUI()
         self.temlbdatapath = ''
         self.temyolov8datayamlpath = ''
+        self.temtargetpath = ''
  
     def initUI(self):
         # 设置窗口的标题
@@ -156,11 +167,26 @@ class CommandExecuter(QMainWindow):
         # 将输出显示在文本框中
         self.textbox4.setText(out.decode('utf-8') + '\n' + err.decode('utf-8'))
 
+    # def use_yolov8_seg_train(self):
+        
+    #     # 需要执行的Linux命令
+    #     # yolo segment train data=xxx.yaml model=yolov8n-seg.yaml epochs=100 imgsz=640
+    #     command = 'cd yolov8 && yolo segment train data='+ self.temyolov8datayamlpath +' model=yolov8n-seg.yaml epochs=100 imgsz=640'  # 示例：列出当前目录下的文件和文件夹
+ 
+    #     # 执行命令并获取输出
+    #     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #     out, err = process.communicate()
+
+    #     # 将输出显示在文本框中
+    #     self.textbox5.setText(out.decode('utf-8') + '\n' + err.decode('utf-8'))
+
     def use_yolov8_seg_train(self):
-    
+        
         # 需要执行的Linux命令
         # yolo segment train data=xxx.yaml model=yolov8n-seg.yaml epochs=100 imgsz=640
-        command = 'cd yolov8 && yolo segment train data='+ self.temyolov8datayamlpath +' model=yolov8n-seg.yaml epochs=100 imgsz=640'  # 示例：列出当前目录下的文件和文件夹
+        t = time.strftime("%Y%m%d%H%M%S", time.localtime())
+        self.temtargetpath = '../yolov8runs_'+t
+        command = "cd yolov8 && yolo settings runs_dir='"+ self.temtargetpath +"' && pwd &&yolo segment train data="+ self.temyolov8datayamlpath + " model=yolov8n-seg.yaml epochs=100 imgsz=640"  # 示例：列出当前目录下的文件和文件夹
  
         # 执行命令并获取输出
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -168,7 +194,6 @@ class CommandExecuter(QMainWindow):
 
         # 将输出显示在文本框中
         self.textbox5.setText(out.decode('utf-8') + '\n' + err.decode('utf-8'))
-
 def main():
     app = QApplication(sys.argv)
     ex = CommandExecuter()
